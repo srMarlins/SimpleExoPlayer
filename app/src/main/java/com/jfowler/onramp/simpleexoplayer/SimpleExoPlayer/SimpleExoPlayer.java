@@ -16,6 +16,7 @@ import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.VideoMedia
  * Created by jfowler on 8/27/15.
  */
 public class SimpleExoPlayer {
+
     private ExoPlayer exoPlayer;
     private MediaController.MediaPlayerControl mediaPlayerControl;
 

@@ -31,6 +31,8 @@ public class MainActivity extends Activity {
         Button pause = (Button) findViewById(R.id.buttonPause);
         Button stop = (Button) findViewById(R.id.buttonStop);
         final EditText input = (EditText) findViewById(R.id.editTextURI);
+
+        //Setup the listener so we can catch any errors thrown by the ExoPlayer
         final ExoPlayer.Listener listener = new ExoPlayer.Listener() {
             @Override
             public void onPlayerStateChanged(boolean b, int i) {
@@ -54,6 +56,8 @@ public class MainActivity extends Activity {
                 if(!simpleExoPlayer.isPlaying()) {
                     String url = input.getText().toString().trim();
                     if(url != null && !url.equals("")) {
+
+                        //You can pass in null for the Surface if only using audio
                         Media media = new VideoMedia(Uri.parse(url));
                         simpleExoPlayer.playMedia(MainActivity.this, listener, videoView.getHolder().getSurface(), media);
                         play.setEnabled(false);
@@ -65,6 +69,7 @@ public class MainActivity extends Activity {
                 }
             }
         });
+
         pause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
