@@ -14,7 +14,8 @@ public abstract class Media {
     private Uri uri;
     private Context context;
 
-    public Media(Uri uri){
+    public Media(Context context, Uri uri){
+        this.context = context;
         this.uri = uri;
     }
 

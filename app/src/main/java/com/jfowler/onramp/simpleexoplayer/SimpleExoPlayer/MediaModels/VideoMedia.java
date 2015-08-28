@@ -18,8 +18,8 @@ import com.google.android.exoplayer.upstream.DefaultUriDataSource;
  */
 public class VideoMedia extends Media {
 
-    public VideoMedia(Uri uri) {
-        super(uri);
+    public VideoMedia(Context context, Uri uri) {
+        super(context, uri);
     }
 
     @Override

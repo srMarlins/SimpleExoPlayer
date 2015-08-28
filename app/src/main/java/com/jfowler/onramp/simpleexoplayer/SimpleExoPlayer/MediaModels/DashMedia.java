@@ -34,6 +34,8 @@ import com.google.android.exoplayer.upstream.DefaultUriDataSource;
 import com.google.android.exoplayer.util.ManifestFetcher;
 import com.google.android.exoplayer.util.Util;
 import com.jfowler.onramp.simpleexoplayer.MainActivity;
+import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.Renderers.DashRenderer;
+import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.Renderers.MediaListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -44,13 +46,16 @@ import java.util.List;
  */
 public class DashMedia extends AdaptiveMedia{
 
-    public DashMedia(Uri uri){
-        super(uri);
+    private DashRenderer dashRenderer;
+
+    public DashMedia(Context context, MediaListener listener, Uri uri){
+        super(context, listener, uri);
+        dashRenderer = new DashRenderer(this);
     }
 
-    public static enum StreamType{
-        FIXED_LENGTH,
-        LIVE_DVR,
-        LIVE,
+    @Override
+    protected void prepareRender() {
+        dashRenderer.prepareRender(getContext(), this);
     }
+
 }

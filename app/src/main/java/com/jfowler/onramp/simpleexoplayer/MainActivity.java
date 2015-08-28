@@ -11,6 +11,8 @@ import android.widget.VideoView;
 
 import com.google.android.exoplayer.ExoPlaybackException;
 import com.google.android.exoplayer.ExoPlayer;
+import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.DashMedia;
+import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.Renderers.MediaListener;
 import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.SimpleExoPlayer;
 import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.Media;
 import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.VideoMedia;
@@ -58,9 +60,16 @@ public class MainActivity extends Activity {
                     if(url != null && !url.equals("")) {
 
                         //You can pass in null for the Surface if only using audio
-                        Media media = new VideoMedia(Uri.parse(url));
-                        simpleExoPlayer.playMedia(MainActivity.this, listener, videoView.getHolder().getSurface(), media);
-                        play.setEnabled(false);
+                        Media media = new DashMedia(MainActivity.this, new MediaListener() {
+                            @Override
+                            public void mediaPrepared(Media media) {
+                                simpleExoPlayer.playMedia(MainActivity.this, listener, videoView.getHolder().getSurface(), media);
+                                play.setEnabled(false);
+                            }
+                        }, Uri.parse(url));
+
+                        media.buildRenderer(MainActivity.this);
+
                     }else{
                         Toast.makeText(MainActivity.this, "No input", Toast.LENGTH_SHORT).show();
                     }

@@ -10,6 +10,7 @@ import com.google.android.exoplayer.MediaCodecAudioTrackRenderer;
 import com.google.android.exoplayer.MediaCodecUtil;
 import com.google.android.exoplayer.MediaCodecVideoTrackRenderer;
 import com.google.android.exoplayer.SampleSource;
+import com.google.android.exoplayer.TrackRenderer;
 import com.google.android.exoplayer.chunk.ChunkSampleSource;
 import com.google.android.exoplayer.chunk.ChunkSource;
 import com.google.android.exoplayer.chunk.Format;
@@ -53,6 +54,7 @@ public class DashRenderer implements Renderer, ManifestFetcher.ManifestCallback,
     private MediaCodecVideoTrackRenderer videoTrackRenderer;
     private MediaCodecAudioTrackRenderer audioTrackRenderer;
     private Long elapsedRealtimeOffset;
+    private RendererListener rendererListener;
 
     public DashRenderer(Media media){
         this.media = media;
@@ -60,8 +62,8 @@ public class DashRenderer implements Renderer, ManifestFetcher.ManifestCallback,
         loadControl = new DefaultLoadControl(new DefaultAllocator(Media.BUFFER_SEGMENT_SIZE));
         bandwidthMeter = new DefaultBandwidthMeter();
         MediaPresentationDescriptionParser parser = new MediaPresentationDescriptionParser();
-        manifestDataSource = new DefaultUriDataSource(this.media.getContext(), this.media.getUri().getPath());
-        manifestFetcher = new ManifestFetcher<>(this.media.getUri().getPath(), manifestDataSource, parser);
+        manifestDataSource = new DefaultUriDataSource(this.media.getContext(), this.media.getUri().toString());
+        manifestFetcher = new ManifestFetcher<>(this.media.getUri().toString(), manifestDataSource, parser);
         manifestFetcher.singleLoad(handler.getLooper(), this);
     }
 
@@ -74,7 +76,8 @@ public class DashRenderer implements Renderer, ManifestFetcher.ManifestCallback,
     }
 
     @Override
-    public void prepareRender(Context context) {
+    public void prepareRender(Context context, RendererListener rendererListener) {
+        this.rendererListener = rendererListener;
         Period period = manifest.periods.get(0);
         Handler mainHandler = handler;
 
@@ -113,7 +116,7 @@ public class DashRenderer implements Renderer, ManifestFetcher.ManifestCallback,
         if (videoRepresentationIndices == null || videoRepresentationIndices.length == 0) {
             videoTrackRenderer = null;
         } else {
-            DataSource videoDataSource = new DefaultUriDataSource(context, bandwidthMeter, media.getUri().getPath());
+            DataSource videoDataSource = new DefaultUriDataSource(context, bandwidthMeter, media.getUri().toString());
             ChunkSource videoChunkSource = new DashChunkSource(manifestFetcher,
                     videoAdaptationSetIndex, videoRepresentationIndices, videoDataSource,
                     new FormatEvaluator.AdaptiveEvaluator(bandwidthMeter), LIVE_EDGE_LATENCY_MS, elapsedRealtimeOffset,
@@ -129,7 +132,7 @@ public class DashRenderer implements Renderer, ManifestFetcher.ManifestCallback,
         List<ChunkSource> audioChunkSourceList = new ArrayList<>();
         List<String> audioTrackNameList = new ArrayList<>();
         if (audioAdaptationSet != null) {
-            DataSource audioDataSource = new DefaultUriDataSource(context, bandwidthMeter, media.getUri().getPath());
+            DataSource audioDataSource = new DefaultUriDataSource(context, bandwidthMeter, media.getUri().toString());
             FormatEvaluator audioEvaluator = new FormatEvaluator.FixedEvaluator();
             List<Representation> audioRepresentations = audioAdaptationSet.representations;
             List<String> codecs = new ArrayList<>();
@@ -167,7 +170,7 @@ public class DashRenderer implements Renderer, ManifestFetcher.ManifestCallback,
     @Override
     public void onTimestampResolved(UtcTimingElement utcTimingElement, long l) {
         this.elapsedRealtimeOffset = l;
-        prepareRender(media.getContext());
+        prepareRender(media.getContext(), rendererListener);
     }
 
     @Override
@@ -179,6 +182,11 @@ public class DashRenderer implements Renderer, ManifestFetcher.ManifestCallback,
     public void onSingleManifest(Object o) {
         if(o instanceof MediaPresentationDescription) {
             this.manifest = (MediaPresentationDescription) o;
+            prepareRender(media.getContext(), rendererListener);
+            TrackRenderer[] array = new TrackRenderer[2];
+            array[0] = audioTrackRenderer;
+            array[1] = videoTrackRenderer;
+            rendererListener.onPrepared(array);
         }else{
             throw new IllegalArgumentException("onSingleManifest is not passing a MediaPresentationDescription");
         }

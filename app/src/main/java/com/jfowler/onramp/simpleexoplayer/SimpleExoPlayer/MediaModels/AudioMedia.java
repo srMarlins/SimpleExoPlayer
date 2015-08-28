@@ -16,8 +16,8 @@ import com.google.android.exoplayer.upstream.DefaultUriDataSource;
  */
 public class AudioMedia extends Media {
 
-    public AudioMedia(Uri uri) {
-        super(uri);
+    public AudioMedia(Context context, Uri uri) {
+        super(context, uri);
     }
 
     @Override

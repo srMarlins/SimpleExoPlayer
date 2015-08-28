@@ -7,7 +7,7 @@ import android.content.Context;
  */
 public class HlsRenderer implements Renderer {
     @Override
-    public void prepareRender(Context context) {
+    public void prepareRender(Context context, RendererListener rendererListener) {
 
     }
 }

@@ -6,5 +6,5 @@ import android.content.Context;
  * Created by jfowler on 8/28/15.
  */
 public interface Renderer {
-    public void prepareRender(Context context);
+    public void prepareRender(Context context, RendererListener rendererListener);
 }
