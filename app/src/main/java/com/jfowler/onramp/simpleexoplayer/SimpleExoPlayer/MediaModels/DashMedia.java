@@ -1,41 +1,56 @@
 package com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels;
 
 import android.content.Context;
+import android.media.MediaCodec;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Looper;
 
+import com.google.android.exoplayer.DefaultLoadControl;
 import com.google.android.exoplayer.LoadControl;
 import com.google.android.exoplayer.MediaCodecAudioTrackRenderer;
+import com.google.android.exoplayer.MediaCodecUtil;
 import com.google.android.exoplayer.MediaCodecVideoTrackRenderer;
+import com.google.android.exoplayer.SampleSource;
 import com.google.android.exoplayer.TrackRenderer;
 import com.google.android.exoplayer.chunk.ChunkSampleSource;
 import com.google.android.exoplayer.chunk.ChunkSource;
+import com.google.android.exoplayer.chunk.Format;
 import com.google.android.exoplayer.chunk.FormatEvaluator;
+import com.google.android.exoplayer.chunk.MultiTrackChunkSource;
+import com.google.android.exoplayer.chunk.VideoFormatSelectorUtil;
 import com.google.android.exoplayer.dash.DashChunkSource;
+import com.google.android.exoplayer.dash.mpd.AdaptationSet;
+import com.google.android.exoplayer.dash.mpd.MediaPresentationDescriptionParser;
+import com.google.android.exoplayer.dash.mpd.Period;
+import com.google.android.exoplayer.dash.mpd.Representation;
+import com.google.android.exoplayer.dash.mpd.UtcTimingElement;
+import com.google.android.exoplayer.dash.mpd.UtcTimingElementResolver;
+import com.google.android.exoplayer.drm.StreamingDrmSessionManager;
+import com.google.android.exoplayer.drm.UnsupportedDrmException;
 import com.google.android.exoplayer.upstream.BandwidthMeter;
 import com.google.android.exoplayer.upstream.DataSource;
 import com.google.android.exoplayer.upstream.DefaultUriDataSource;
 import com.google.android.exoplayer.util.ManifestFetcher;
+import com.google.android.exoplayer.util.Util;
+import com.jfowler.onramp.simpleexoplayer.MainActivity;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by jfowler on 8/27/15.
  */
-public class DashMedia extends AdaptiveMedia {
+public class DashMedia extends AdaptiveMedia{
 
-    @Override
-    public MediaCodecVideoTrackRenderer buildVideoTrackRenderer(Context context, int bufferSegmentSize, int bufferSegmentCount) {
-        return null;
+    public DashMedia(Uri uri){
+        super(uri);
     }
 
-    @Override
-    protected MediaCodecAudioTrackRenderer buildAudioRender(Context context, int bufferSegmentSize, int bufferSegmentCount){
-        // Build the audio renderer.
-        //TODO - Add fixed dash streaming here
-       /* DataSource audioDataSource = new DefaultUriDataSource(context, bandwidthMeter, getUri().getPath());
-        ChunkSource audioChunkSource = new DashChunkSource(manifestFetcher, audioAdaptationSetIndex,
-                null, audioDataSource, new FormatEvaluator.FixedEvaluator(), LIVE_EDGE_LATENCY_MS, elapsedRealtimeOffset, null,
-                null);
-        ChunkSampleSource audioSampleSource = new ChunkSampleSource(audioChunkSource,
-                loadControl, bufferSegmentSize * bufferSegmentCount);
-        return new MediaCodecAudioTrackRenderer(audioSampleSource);*/
+    public static enum StreamType{
+        FIXED_LENGTH,
+        LIVE_DVR,
+        LIVE,
     }
 }
