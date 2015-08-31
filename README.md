@@ -6,11 +6,11 @@ This is intended for people unfamiliar with ExoPlayer and MediaPlayer and their 
 Features
   - Stream standard audio and video files from local or remote files.
   - Stream DASH media
+  - SmoothStreaming
   - Supports all media codecs used in Android's MediaCodec
   - Requires API 16 or greater
   
 In Progress
    - HLS streaming
-   - SmoothStreaming
 
 *Please note that the MediaCodec class will often throw errors on the emulator while using this library.  Please test on devices before submitting bug reports.
