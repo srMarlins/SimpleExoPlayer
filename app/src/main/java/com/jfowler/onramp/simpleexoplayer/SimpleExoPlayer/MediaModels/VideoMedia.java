@@ -18,8 +18,8 @@ import com.google.android.exoplayer.upstream.DefaultUriDataSource;
  */
 public class VideoMedia extends Media {
 
-    public VideoMedia(Context context, Uri uri) {
-        super(context, uri);
+    public VideoMedia(Context context, Uri uri, String userAgent) {
+        super(context, uri, userAgent);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class VideoMedia extends Media {
     public TrackRenderer[] buildRenderer(Context context, int bufferSegmentSize, int bufferSegmentCount) {
         TrackRenderer[] array = new TrackRenderer[2];
         Allocator allocator = new DefaultAllocator(bufferSegmentSize);
-        DataSource dataSource = new DefaultUriDataSource(context, null, getUri().getPath());
+        DataSource dataSource = new DefaultUriDataSource(context, getUserAgent());
         ExtractorSampleSource sampleSource = new ExtractorSampleSource(
                 getUri(), dataSource, allocator, bufferSegmentSize * bufferSegmentCount);
         array[0] = new MediaCodecAudioTrackRenderer(sampleSource);

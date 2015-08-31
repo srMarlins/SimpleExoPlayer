@@ -48,8 +48,8 @@ public class DashMedia extends AdaptiveMedia{
 
     private DashRenderer dashRenderer;
 
-    public DashMedia(Context context, MediaListener listener, Uri uri){
-        super(context, listener, uri);
+    public DashMedia(Context context, MediaListener listener, Uri uri, String userAgent){
+        super(context, listener, uri, userAgent);
         dashRenderer = new DashRenderer(this);
     }
 

@@ -11,6 +11,7 @@ import android.widget.VideoView;
 
 import com.google.android.exoplayer.ExoPlaybackException;
 import com.google.android.exoplayer.ExoPlayer;
+import com.google.android.exoplayer.util.Util;
 import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.DashMedia;
 import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.Renderers.MediaListener;
 import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.SimpleExoPlayer;
@@ -66,7 +67,7 @@ public class MainActivity extends Activity {
                                 simpleExoPlayer.playMedia(MainActivity.this, listener, videoView.getHolder().getSurface(), media);
                                 play.setEnabled(false);
                             }
-                        }, Uri.parse(url));
+                        }, Uri.parse(url), Util.getUserAgent(MainActivity.this, "SimpleExoPlayer"));
 
                         media.buildRenderer(MainActivity.this);
 

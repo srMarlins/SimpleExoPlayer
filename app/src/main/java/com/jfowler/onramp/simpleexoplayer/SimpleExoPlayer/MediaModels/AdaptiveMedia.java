@@ -32,8 +32,8 @@ public abstract class AdaptiveMedia extends Media implements RendererListener{
     protected MediaCodecAudioTrackRenderer audioTrackRenderer;
     protected MediaListener mediaListener;
 
-    public AdaptiveMedia(Context context, MediaListener mediaListener, Uri uri) {
-        super(context, uri);
+    public AdaptiveMedia(Context context, MediaListener mediaListener, Uri uri, String userAgent) {
+        super(context, uri, userAgent);
         this.mediaListener = mediaListener;
     }
 
