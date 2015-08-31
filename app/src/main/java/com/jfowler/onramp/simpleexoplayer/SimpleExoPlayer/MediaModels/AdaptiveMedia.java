@@ -18,14 +18,16 @@ public abstract class AdaptiveMedia extends Media implements RendererListener{
     public static final int VIDEO_BUFFER_SEGMENTS = 200;
     public static final int AUDIO_BUFFER_SEGMENTS = 60;
 
-    protected MediaCodecVideoTrackRenderer videoTrackRenderer;
-    protected MediaCodecAudioTrackRenderer audioTrackRenderer;
+    private MediaCodecVideoTrackRenderer videoTrackRenderer;
+    private MediaCodecAudioTrackRenderer audioTrackRenderer;
     private MediaListener mediaListener;
 
     public AdaptiveMedia(Context context, MediaListener mediaListener, Uri uri, String userAgent) {
         super(context, uri, userAgent);
         this.mediaListener = mediaListener;
     }
+
+    protected abstract void prepareRender();
 
     @Override
     public TrackRenderer[] buildRenderer(Context context) {
