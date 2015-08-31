@@ -4,8 +4,6 @@ import android.content.Context;
 import android.media.MediaCodec;
 import android.os.Handler;
 
-import com.google.android.exoplayer.DefaultLoadControl;
-import com.google.android.exoplayer.LoadControl;
 import com.google.android.exoplayer.MediaCodecAudioTrackRenderer;
 import com.google.android.exoplayer.MediaCodecUtil;
 import com.google.android.exoplayer.MediaCodecVideoTrackRenderer;
@@ -25,14 +23,15 @@ import com.google.android.exoplayer.dash.mpd.Period;
 import com.google.android.exoplayer.dash.mpd.Representation;
 import com.google.android.exoplayer.dash.mpd.UtcTimingElement;
 import com.google.android.exoplayer.dash.mpd.UtcTimingElementResolver;
-import com.google.android.exoplayer.upstream.BandwidthMeter;
+import com.google.android.exoplayer.text.TextTrackRenderer;
+import com.google.android.exoplayer.text.ttml.TtmlParser;
+import com.google.android.exoplayer.text.webvtt.WebvttParser;
 import com.google.android.exoplayer.upstream.DataSource;
-import com.google.android.exoplayer.upstream.DefaultAllocator;
-import com.google.android.exoplayer.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer.upstream.DefaultUriDataSource;
 import com.google.android.exoplayer.util.ManifestFetcher;
 import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.AdaptiveMedia;
 import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.Media;
+import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.Renderers.RendererInterfaces.RendererListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,40 +40,23 @@ import java.util.List;
 /**
  * Created by jfowler on 8/28/15.
  */
-public class DashRenderer implements Renderer, ManifestFetcher.ManifestCallback, UtcTimingElementResolver.UtcTimingCallback{
+public class DashRenderer extends com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.Renderers.Renderer implements UtcTimingElementResolver.UtcTimingCallback, ManifestFetcher.ManifestCallback {
 
-    private static final int LIVE_EDGE_LATENCY_MS = 30000;
-
-    private Media media;
     private MediaPresentationDescription manifest;
-    private BandwidthMeter bandwidthMeter;
-    private ManifestFetcher manifestFetcher;
-    private LoadControl loadControl;
-    private DefaultUriDataSource manifestDataSource;
-    private Handler handler;
-    private MediaCodecVideoTrackRenderer videoTrackRenderer;
-    private MediaCodecAudioTrackRenderer audioTrackRenderer;
     private Long elapsedRealtimeOffset;
-    private RendererListener rendererListener;
 
-    public DashRenderer(Media media){
-        this.media = media;
-        this.handler = new Handler();
-        this.loadControl = new DefaultLoadControl(new DefaultAllocator(Media.BUFFER_SEGMENT_SIZE));
-        this.bandwidthMeter = new DefaultBandwidthMeter();
-        MediaPresentationDescriptionParser parser = new MediaPresentationDescriptionParser();
-        this.manifestDataSource = new DefaultUriDataSource(this.media.getContext(), this.media.getUserAgent());
-        this.manifestFetcher = new ManifestFetcher<>(this.media.getUri().toString(), manifestDataSource, parser);
-        this.manifestFetcher.singleLoad(handler.getLooper(), this);
+    public DashRenderer(Media media) {
+        super(media);
         this.elapsedRealtimeOffset = 0l;
-        this.rendererListener = (RendererListener) media;
+        this.manifestFetcher = new ManifestFetcher<>(this.media.getUri().toString(), manifestDataSource, new MediaPresentationDescriptionParser());
+        this.manifestFetcher.singleLoad(handler.getLooper(), this);
     }
 
-    public MediaCodecAudioTrackRenderer getAudioTrackRenderer(){
+    public MediaCodecAudioTrackRenderer getAudioTrackRenderer() {
         return audioTrackRenderer;
     }
 
-    public MediaCodecVideoTrackRenderer getVideoTrackRenderer(){
+    public MediaCodecVideoTrackRenderer getVideoTrackRenderer() {
         return videoTrackRenderer;
     }
 
@@ -126,7 +108,7 @@ public class DashRenderer implements Renderer, ManifestFetcher.ManifestCallback,
                     mainHandler, null);
             ChunkSampleSource videoSampleSource = new ChunkSampleSource(videoChunkSource, loadControl,
                     AdaptiveMedia.VIDEO_BUFFER_SEGMENTS * Media.BUFFER_SEGMENT_SIZE, mainHandler, null,
-                    0);
+                    TYPE_VIDEO);
             videoTrackRenderer = new MediaCodecVideoTrackRenderer(videoSampleSource, null, true,
                     MediaCodec.VIDEO_SCALING_MODE_SCALE_TO_FIT, 5000, null, mainHandler, null, 50);
         }
@@ -163,11 +145,46 @@ public class DashRenderer implements Renderer, ManifestFetcher.ManifestCallback,
             audioChunkSource = new MultiTrackChunkSource(audioChunkSourceList);
             SampleSource audioSampleSource = new ChunkSampleSource(audioChunkSource, loadControl,
                     AdaptiveMedia.AUDIO_BUFFER_SEGMENTS * Media.BUFFER_SEGMENT_SIZE, mainHandler, null,
-                    1);
+                    TYPE_AUDIO);
             audioTrackRenderer = new MediaCodecAudioTrackRenderer(audioSampleSource, null, true,
                     mainHandler, null);
         }
 
+        DataSource textDataSource = new DefaultUriDataSource(context, bandwidthMeter, media.getUserAgent());
+        FormatEvaluator textEvaluator = new FormatEvaluator.FixedEvaluator();
+        List<ChunkSource> textChunkSourceList = new ArrayList<>();
+        List<String> textTrackNameList = new ArrayList<>();
+        for (int i = 0; i < period.adaptationSets.size(); i++) {
+            AdaptationSet adaptationSet = period.adaptationSets.get(i);
+            if (adaptationSet.type == AdaptationSet.TYPE_TEXT) {
+                List<Representation> representations = adaptationSet.representations;
+                for (int j = 0; j < representations.size(); j++) {
+                    Representation representation = representations.get(j);
+                    textTrackNameList.add(representation.format.id);
+                    textChunkSourceList.add(new DashChunkSource(manifestFetcher, i, new int[]{j},
+                            textDataSource, textEvaluator, LIVE_EDGE_LATENCY_MS, elapsedRealtimeOffset,
+                            mainHandler, null));
+                }
+            }
+        }
+
+        // Build the text renderers
+        final String[] textTrackNames;
+        final MultiTrackChunkSource textChunkSource;
+        if (textChunkSourceList.isEmpty()) {
+            textTrackNames = null;
+            textChunkSource = null;
+            this.textTrackRenderer = null;
+        } else {
+            textTrackNames = new String[textTrackNameList.size()];
+            textTrackNameList.toArray(textTrackNames);
+            textChunkSource = new MultiTrackChunkSource(textChunkSourceList);
+            SampleSource textSampleSource = new ChunkSampleSource(textChunkSource, loadControl,
+                    TEXT_BUFFER_SEGMENTS * Media.BUFFER_SEGMENT_SIZE, mainHandler, null,
+                    TYPE_TEXT);
+            this.textTrackRenderer = new TextTrackRenderer(textSampleSource, null, mainHandler.getLooper(),
+                    new TtmlParser(), new WebvttParser());
+        }
     }
 
     @Override
@@ -190,9 +207,10 @@ public class DashRenderer implements Renderer, ManifestFetcher.ManifestCallback,
                         manifestFetcher.getManifestLoadCompleteTimestamp(), this);
             } else {
                 prepareRender(media.getContext(), rendererListener);
-                TrackRenderer[] array = new TrackRenderer[2];
-                array[0] = audioTrackRenderer;
-                array[1] = videoTrackRenderer;
+                TrackRenderer[] array = new TrackRenderer[3];
+                array[TYPE_VIDEO] = videoTrackRenderer;
+                array[TYPE_AUDIO] = audioTrackRenderer;
+                array[TYPE_TEXT] = textTrackRenderer;
                 rendererListener.onPrepared(array);
             }
         }else{

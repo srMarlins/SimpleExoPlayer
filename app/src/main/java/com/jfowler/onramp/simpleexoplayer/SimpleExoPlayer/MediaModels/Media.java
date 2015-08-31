@@ -3,7 +3,6 @@ package com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels;
 import android.content.Context;
 import android.net.Uri;
 import com.google.android.exoplayer.TrackRenderer;
-import com.google.android.exoplayer.util.Util;
 
 /**
  * Created by jfowler on 8/27/15.
