@@ -27,15 +27,11 @@ import com.google.android.exoplayer.dash.mpd.UtcTimingElement;
 import com.google.android.exoplayer.dash.mpd.UtcTimingElementResolver;
 import com.google.android.exoplayer.upstream.BandwidthMeter;
 import com.google.android.exoplayer.upstream.DataSource;
-import com.google.android.exoplayer.upstream.DataSpec;
 import com.google.android.exoplayer.upstream.DefaultAllocator;
 import com.google.android.exoplayer.upstream.DefaultBandwidthMeter;
-import com.google.android.exoplayer.upstream.DefaultHttpDataSource;
 import com.google.android.exoplayer.upstream.DefaultUriDataSource;
-import com.google.android.exoplayer.upstream.HttpDataSource;
-import com.google.android.exoplayer.upstream.UriDataSource;
 import com.google.android.exoplayer.util.ManifestFetcher;
-import com.google.android.exoplayer.util.Predicate;
+import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.AdaptiveMedia;
 import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.Media;
 
 import java.io.IOException;
@@ -129,7 +125,7 @@ public class DashRenderer implements Renderer, ManifestFetcher.ManifestCallback,
                     new FormatEvaluator.AdaptiveEvaluator(bandwidthMeter), LIVE_EDGE_LATENCY_MS, elapsedRealtimeOffset,
                     mainHandler, null);
             ChunkSampleSource videoSampleSource = new ChunkSampleSource(videoChunkSource, loadControl,
-                    Media.BUFFER_SEGMENT_COUNT * Media.BUFFER_SEGMENT_SIZE, mainHandler, null,
+                    AdaptiveMedia.VIDEO_BUFFER_SEGMENTS * Media.BUFFER_SEGMENT_SIZE, mainHandler, null,
                     0);
             videoTrackRenderer = new MediaCodecVideoTrackRenderer(videoSampleSource, null, true,
                     MediaCodec.VIDEO_SCALING_MODE_SCALE_TO_FIT, 5000, null, mainHandler, null, 50);
@@ -166,7 +162,7 @@ public class DashRenderer implements Renderer, ManifestFetcher.ManifestCallback,
             audioTrackNameList.toArray(audioTrackNames);
             audioChunkSource = new MultiTrackChunkSource(audioChunkSourceList);
             SampleSource audioSampleSource = new ChunkSampleSource(audioChunkSource, loadControl,
-                    Media.BUFFER_SEGMENT_COUNT * Media.BUFFER_SEGMENT_SIZE, mainHandler, null,
+                    AdaptiveMedia.AUDIO_BUFFER_SEGMENTS * Media.BUFFER_SEGMENT_SIZE, mainHandler, null,
                     1);
             audioTrackRenderer = new MediaCodecAudioTrackRenderer(audioSampleSource, null, true,
                     mainHandler, null);

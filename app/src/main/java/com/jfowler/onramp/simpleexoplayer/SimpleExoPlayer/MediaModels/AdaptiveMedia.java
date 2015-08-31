@@ -28,6 +28,9 @@ import java.io.IOException;
  */
 public abstract class AdaptiveMedia extends Media implements RendererListener{
 
+    public static final int VIDEO_BUFFER_SEGMENTS = 200;
+    public static final int AUDIO_BUFFER_SEGMENTS = 60;
+
     protected MediaCodecVideoTrackRenderer videoTrackRenderer;
     protected MediaCodecAudioTrackRenderer audioTrackRenderer;
     protected MediaListener mediaListener;

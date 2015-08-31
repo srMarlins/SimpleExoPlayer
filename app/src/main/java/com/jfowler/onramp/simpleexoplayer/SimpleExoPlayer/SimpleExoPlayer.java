@@ -33,7 +33,7 @@ public class SimpleExoPlayer {
         setPlayerListener(listener);
         for(Media m : media) {
             TrackRenderer[] renders = m.buildRenderer(context);
-            if(surface != null && m instanceof VideoMedia){
+            if(surface != null){
                 setVideoSurface(surface, (MediaCodecVideoTrackRenderer) renders[1]);
                 exoPlayer.prepare(renders[0], renders[1]);
             }else {
