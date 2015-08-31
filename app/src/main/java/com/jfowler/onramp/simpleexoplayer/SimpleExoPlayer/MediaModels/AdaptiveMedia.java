@@ -6,6 +6,8 @@ import android.net.Uri;
 import com.google.android.exoplayer.MediaCodecAudioTrackRenderer;
 import com.google.android.exoplayer.MediaCodecVideoTrackRenderer;
 import com.google.android.exoplayer.TrackRenderer;
+import com.google.android.exoplayer.text.TextTrackRenderer;
+import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.Renderers.Renderer;
 import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.Renderers.RendererInterfaces.MediaListener;
 import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.Renderers.RendererInterfaces.RendererListener;
 
@@ -20,6 +22,7 @@ public abstract class AdaptiveMedia extends Media implements RendererListener{
 
     private MediaCodecVideoTrackRenderer videoTrackRenderer;
     private MediaCodecAudioTrackRenderer audioTrackRenderer;
+    private TextTrackRenderer textTrackRenderer;
     private MediaListener mediaListener;
 
     public AdaptiveMedia(Context context, MediaListener mediaListener, Uri uri, String userAgent) {
@@ -36,16 +39,19 @@ public abstract class AdaptiveMedia extends Media implements RendererListener{
 
     @Override
     public final TrackRenderer[] buildRenderer(Context context, int bufferSegmentSize, int bufferSegmentCount) {
-        TrackRenderer[] renderers = new TrackRenderer[2];
-        renderers[0] = audioTrackRenderer;
-        renderers[1] = videoTrackRenderer;
+        TrackRenderer[] renderers = new TrackRenderer[3];
+        renderers[Renderer.TYPE_VIDEO] = videoTrackRenderer;
+        renderers[Renderer.TYPE_AUDIO] = audioTrackRenderer;
+        renderers[Renderer.TYPE_TEXT] = textTrackRenderer;
+
         return renderers;
     }
 
     @Override
     public void onPrepared(TrackRenderer[] renderers) {
-        audioTrackRenderer = (MediaCodecAudioTrackRenderer)renderers[0];
-        videoTrackRenderer = (MediaCodecVideoTrackRenderer)renderers[1];
+        videoTrackRenderer = (MediaCodecVideoTrackRenderer)renderers[Renderer.TYPE_VIDEO];
+        audioTrackRenderer = (MediaCodecAudioTrackRenderer)renderers[Renderer.TYPE_AUDIO];
+        textTrackRenderer = (TextTrackRenderer)renderers[Renderer.TYPE_TEXT];
         mediaListener.mediaPrepared(this);
     }
 }

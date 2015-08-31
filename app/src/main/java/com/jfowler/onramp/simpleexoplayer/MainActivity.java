@@ -15,6 +15,7 @@ import com.google.android.exoplayer.util.Util;
 import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.DashMedia;
 import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.Media;
 import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.Renderers.RendererInterfaces.MediaListener;
+import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.SmoothStreamingMedia;
 import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.SimpleExoPlayer;
 
 public class MainActivity extends Activity {
@@ -60,7 +61,7 @@ public class MainActivity extends Activity {
                     if (url != null && !url.equals("")) {
 
                         //You can pass in null for the Surface if only using audio
-                        Media media = new DashMedia(MainActivity.this, new MediaListener() {
+                        Media media = new SmoothStreamingMedia(MainActivity.this, new MediaListener() {
                             @Override
                             public void mediaPrepared(Media media) {
                                 simpleExoPlayer.playMedia(MainActivity.this, listener, videoView.getHolder().getSurface(), media);
