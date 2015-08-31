@@ -13,10 +13,9 @@ import com.google.android.exoplayer.ExoPlaybackException;
 import com.google.android.exoplayer.ExoPlayer;
 import com.google.android.exoplayer.util.Util;
 import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.DashMedia;
-import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.Renderers.MediaListener;
-import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.SimpleExoPlayer;
 import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.Media;
-import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.VideoMedia;
+import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.Renderers.RendererInterfaces.MediaListener;
+import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.SimpleExoPlayer;
 
 public class MainActivity extends Activity {
 
@@ -56,9 +55,9 @@ public class MainActivity extends Activity {
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!simpleExoPlayer.isPlaying()) {
+                if (!simpleExoPlayer.isPlaying()) {
                     String url = input.getText().toString().trim();
-                    if(url != null && !url.equals("")) {
+                    if (url != null && !url.equals("")) {
 
                         //You can pass in null for the Surface if only using audio
                         Media media = new DashMedia(MainActivity.this, new MediaListener() {
@@ -71,10 +70,10 @@ public class MainActivity extends Activity {
 
                         media.buildRenderer(MainActivity.this);
 
-                    }else{
+                    } else {
                         Toast.makeText(MainActivity.this, "No input", Toast.LENGTH_SHORT).show();
                     }
-                }else{
+                } else {
                     Toast.makeText(MainActivity.this, "Already playing!", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -83,10 +82,10 @@ public class MainActivity extends Activity {
         pause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(simpleExoPlayer.isPlaying()) {
+                if (simpleExoPlayer.isPlaying()) {
                     simpleExoPlayer.pauseMedia();
                     play.setEnabled(true);
-                }else{
+                } else {
                     Toast.makeText(MainActivity.this, "Is not playing!", Toast.LENGTH_SHORT).show();
                 }
             }
