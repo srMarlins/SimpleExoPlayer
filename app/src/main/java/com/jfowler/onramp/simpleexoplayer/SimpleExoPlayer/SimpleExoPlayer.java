@@ -10,12 +10,14 @@ import com.google.android.exoplayer.MediaCodecVideoTrackRenderer;
 import com.google.android.exoplayer.TrackRenderer;
 import com.google.android.exoplayer.util.PlayerControl;
 import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.Media;
-import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.VideoMedia;
+import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.Renderers.Renderer;
 
 /**
  * Created by jfowler on 8/27/15.
  */
 public class SimpleExoPlayer {
+
+    private static int NUM_RENDERERS = 3;
 
     private ExoPlayer exoPlayer;
     private MediaController.MediaPlayerControl mediaPlayerControl;
@@ -34,10 +36,10 @@ public class SimpleExoPlayer {
         for(Media m : media) {
             TrackRenderer[] renders = m.buildRenderer(context);
             if(surface != null){
-                setVideoSurface(surface, (MediaCodecVideoTrackRenderer) renders[1]);
+                setVideoSurface(surface, (MediaCodecVideoTrackRenderer) renders[Renderer.TYPE_VIDEO]);
                 exoPlayer.prepare(renders[0], renders[1]);
             }else {
-                exoPlayer.prepare(m.buildRenderer(context));
+                exoPlayer.prepare(renders);
             }
         }
         mediaPlayerControl.start();
@@ -116,7 +118,7 @@ public class SimpleExoPlayer {
 
     private void setupMediaPlayer() {
         if(exoPlayer == null){
-            exoPlayer = ExoPlayer.Factory.newInstance(2);
+            exoPlayer = ExoPlayer.Factory.newInstance(NUM_RENDERERS);
         }
         exoPlayer.stop();
         mediaPlayerControl = new PlayerControl(exoPlayer);

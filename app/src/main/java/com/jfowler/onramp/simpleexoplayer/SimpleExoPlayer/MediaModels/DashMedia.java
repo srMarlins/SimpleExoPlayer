@@ -3,7 +3,7 @@ package com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels;
 import android.content.Context;
 import android.net.Uri;
 import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.Renderers.DashRenderer;
-import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.Renderers.MediaListener;
+import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.Renderers.RendererInterfaces.MediaListener;
 
 /**
  * Created by jfowler on 8/27/15.
