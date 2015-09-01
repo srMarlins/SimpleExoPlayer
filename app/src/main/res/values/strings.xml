@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ExoPlaya</string>
+    <string name="app_name">SimpleExoPlayerDemo</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>

@@ -12,12 +12,10 @@ import android.widget.VideoView;
 import com.google.android.exoplayer.ExoPlaybackException;
 import com.google.android.exoplayer.ExoPlayer;
 import com.google.android.exoplayer.util.Util;
-import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.DashMedia;
-import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.HlsMedia;
-import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.Media;
-import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.Renderers.RendererInterfaces.MediaListener;
-import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.SmoothStreamingMedia;
-import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.SimpleExoPlayer;
+import com.jfowler.onramp.simpleexoplayer.MediaModels.HlsMedia;
+import com.jfowler.onramp.simpleexoplayer.MediaModels.Media;
+import com.jfowler.onramp.simpleexoplayer.Renderers.RendererInterfaces.MediaListener;
+import com.jfowler.onramp.simpleexoplayerdemo.R;
 
 public class MainActivity extends Activity {
 

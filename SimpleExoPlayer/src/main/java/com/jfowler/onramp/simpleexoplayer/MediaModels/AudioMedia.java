@@ -1,4 +1,4 @@
-package com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels;
+package com.jfowler.onramp.simpleexoplayer.MediaModels;
 
 import android.content.Context;
 import android.net.Uri;
