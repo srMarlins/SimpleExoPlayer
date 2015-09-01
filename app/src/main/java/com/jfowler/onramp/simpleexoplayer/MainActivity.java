@@ -13,6 +13,7 @@ import com.google.android.exoplayer.ExoPlaybackException;
 import com.google.android.exoplayer.ExoPlayer;
 import com.google.android.exoplayer.util.Util;
 import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.DashMedia;
+import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.HlsMedia;
 import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.Media;
 import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.Renderers.RendererInterfaces.MediaListener;
 import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.SmoothStreamingMedia;
@@ -61,15 +62,13 @@ public class MainActivity extends Activity {
                     if (url != null && !url.equals("")) {
 
                         //You can pass in null for the Surface if only using audio
-                        Media media = new SmoothStreamingMedia(MainActivity.this, new MediaListener() {
+                        Media media = new HlsMedia(MainActivity.this, new MediaListener() {
                             @Override
                             public void mediaPrepared(Media media) {
                                 simpleExoPlayer.playMedia(MainActivity.this, listener, videoView.getHolder().getSurface(), media);
                                 play.setEnabled(false);
                             }
                         }, Uri.parse(url), Util.getUserAgent(MainActivity.this, "SimpleExoPlayer"));
-
-                        media.buildRenderer(MainActivity.this);
 
                     } else {
                         Toast.makeText(MainActivity.this, "No input", Toast.LENGTH_SHORT).show();
