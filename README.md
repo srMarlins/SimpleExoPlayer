@@ -9,8 +9,9 @@ Features
   - SmoothStreaming
   - Supports all media codecs used in Android's MediaCodec
   - Requires API 16 or greater
+  - HLS streaming
   
 In Progress
-   - HLS streaming
+   - DRM support
 
 *Please note that the MediaCodec class will often throw errors on the emulator while using this library.  Please test on devices before submitting bug reports.
