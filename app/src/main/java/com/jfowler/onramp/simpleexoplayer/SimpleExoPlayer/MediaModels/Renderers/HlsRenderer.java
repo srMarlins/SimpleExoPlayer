@@ -30,6 +30,9 @@ import java.util.Map;
  */
 public class HlsRenderer extends Renderer implements ManifestFetcher.ManifestCallback<HlsMasterPlaylist>{
 
+    private static final int BUFFER_SEGMENT_SIZE = 256 * 1024;
+    private static final int BUFFER_SEGMENTS = 64;
+
     private HlsMasterPlaylist manifest;
 
     public HlsRenderer(Media media) {
@@ -44,25 +47,25 @@ public class HlsRenderer extends Renderer implements ManifestFetcher.ManifestCal
         this.rendererListener = rendererListener;
 
         int[] variantIndices = null;
-        if (manifest instanceof HlsMasterPlaylist) {
-            HlsMasterPlaylist masterPlaylist = (HlsMasterPlaylist) manifest;
-            try {
-                variantIndices = VideoFormatSelectorUtil.selectVideoFormatsForDefaultDisplay(
-                        context, masterPlaylist.variants, null, false);
-            } catch (MediaCodecUtil.DecoderQueryException e) {
-                e.printStackTrace();
-                return;
-            }
-            if (variantIndices.length == 0) {
-                throw new IllegalStateException("No variants selected.");
-            }
+
+        HlsMasterPlaylist masterPlaylist = (HlsMasterPlaylist) manifest;
+        try {
+            variantIndices = VideoFormatSelectorUtil.selectVideoFormatsForDefaultDisplay(
+                    context, masterPlaylist.variants, null, false);
+        } catch (MediaCodecUtil.DecoderQueryException e) {
+            e.printStackTrace();
+            return;
         }
+        if (variantIndices.length == 0) {
+            throw new IllegalStateException("No variants selected.");
+        }
+
 
         DataSource dataSource = new DefaultUriDataSource(context, bandwidthMeter, media.getUserAgent());
         HlsChunkSource chunkSource = new HlsChunkSource(dataSource, media.getUri().toString(), manifest, bandwidthMeter,
                 variantIndices, HlsChunkSource.ADAPTIVE_MODE_SPLICE, null);
         HlsSampleSource sampleSource = new HlsSampleSource(chunkSource, loadControl,
-                AdaptiveMedia.VIDEO_BUFFER_SEGMENTS * Media.BUFFER_SEGMENT_SIZE, this.handler, null, TYPE_VIDEO);
+                BUFFER_SEGMENTS * BUFFER_SEGMENT_SIZE, this.handler, null, TYPE_VIDEO);
         this.videoTrackRenderer = new MediaCodecVideoTrackRenderer(sampleSource,
                 MediaCodec.VIDEO_SCALING_MODE_SCALE_TO_FIT, 5000, this.handler, null, 50);
         this.audioTrackRenderer = new MediaCodecAudioTrackRenderer(sampleSource);
