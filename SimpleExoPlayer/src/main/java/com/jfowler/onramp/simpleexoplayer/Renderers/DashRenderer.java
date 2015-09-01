@@ -1,4 +1,4 @@
-package com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.Renderers;
+package com.jfowler.onramp.simpleexoplayer.Renderers;
 
 import android.content.Context;
 import android.media.MediaCodec;
@@ -29,9 +29,9 @@ import com.google.android.exoplayer.text.webvtt.WebvttParser;
 import com.google.android.exoplayer.upstream.DataSource;
 import com.google.android.exoplayer.upstream.DefaultUriDataSource;
 import com.google.android.exoplayer.util.ManifestFetcher;
-import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.AdaptiveMedia;
-import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.Media;
-import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.Renderers.RendererInterfaces.RendererListener;
+import com.jfowler.onramp.simpleexoplayer.MediaModels.AdaptiveMedia;
+import com.jfowler.onramp.simpleexoplayer.MediaModels.Media;
+import com.jfowler.onramp.simpleexoplayer.Renderers.RendererInterfaces.RendererListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ import java.util.List;
 /**
  * Created by jfowler on 8/28/15.
  */
-public class DashRenderer extends com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.Renderers.Renderer implements UtcTimingElementResolver.UtcTimingCallback, ManifestFetcher.ManifestCallback {
+public class DashRenderer extends Renderer implements UtcTimingElementResolver.UtcTimingCallback, ManifestFetcher.ManifestCallback {
 
     private MediaPresentationDescription manifest;
     private Long elapsedRealtimeOffset;

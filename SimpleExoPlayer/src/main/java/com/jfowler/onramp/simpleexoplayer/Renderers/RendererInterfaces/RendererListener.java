@@ -1,4 +1,4 @@
-package com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.Renderers.RendererInterfaces;
+package com.jfowler.onramp.simpleexoplayer.Renderers.RendererInterfaces;
 
 import com.google.android.exoplayer.TrackRenderer;
 

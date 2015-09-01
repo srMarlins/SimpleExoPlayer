@@ -1,4 +1,4 @@
-package com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.Renderers;
+package com.jfowler.onramp.simpleexoplayer.Renderers;
 
 import android.content.Context;
 import android.media.MediaCodec;
@@ -12,18 +12,13 @@ import com.google.android.exoplayer.hls.HlsChunkSource;
 import com.google.android.exoplayer.hls.HlsMasterPlaylist;
 import com.google.android.exoplayer.hls.HlsPlaylistParser;
 import com.google.android.exoplayer.hls.HlsSampleSource;
-import com.google.android.exoplayer.metadata.Id3Parser;
-import com.google.android.exoplayer.metadata.MetadataTrackRenderer;
-import com.google.android.exoplayer.text.eia608.Eia608TrackRenderer;
 import com.google.android.exoplayer.upstream.DataSource;
 import com.google.android.exoplayer.upstream.DefaultUriDataSource;
 import com.google.android.exoplayer.util.ManifestFetcher;
-import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.AdaptiveMedia;
-import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.Media;
-import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.Renderers.RendererInterfaces.RendererListener;
+import com.jfowler.onramp.simpleexoplayer.MediaModels.Media;
+import com.jfowler.onramp.simpleexoplayer.Renderers.RendererInterfaces.RendererListener;
 
 import java.io.IOException;
-import java.util.Map;
 
 /**
  * Created by jfowler on 8/28/15.
@@ -48,10 +43,9 @@ public class HlsRenderer extends Renderer implements ManifestFetcher.ManifestCal
 
         int[] variantIndices = null;
 
-        HlsMasterPlaylist masterPlaylist = (HlsMasterPlaylist) manifest;
         try {
             variantIndices = VideoFormatSelectorUtil.selectVideoFormatsForDefaultDisplay(
-                    context, masterPlaylist.variants, null, false);
+                    context, manifest.variants, null, false);
         } catch (MediaCodecUtil.DecoderQueryException e) {
             e.printStackTrace();
             return;
