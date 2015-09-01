@@ -1,5 +1,29 @@
 apply plugin: 'com.android.library'
 
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'simpleexoplayer'
+
+    publishedGroupId = 'com.srmarlins.simpleexoplayer'
+    libraryName = 'SimpleExoPlayer'
+    artifact = 'simpleexoplayer'
+
+    libraryDescription = 'An easy to use wrapper for Google\'s ExoPlayer class (A better replacement for MediaPlayer).'
+
+    siteUrl = 'https://github.com/srmarlins/SimpleExoPlayer'
+    gitUrl = 'https://github.com/srmarlins/SimpleExoPlayer.git'
+
+    libraryVersion = '0.9.3'
+
+    developerId = 'srmarlins'
+    developerName = 'Jared Fowler'
+    developerEmail = 'jtfowler93@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.0"
@@ -24,3 +48,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.0.0'
     compile 'com.google.android.exoplayer:exoplayer:r1.4.2'
 }
+
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
