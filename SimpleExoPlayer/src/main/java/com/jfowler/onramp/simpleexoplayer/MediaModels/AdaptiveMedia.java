@@ -1,4 +1,4 @@
-package com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels;
+package com.jfowler.onramp.simpleexoplayer.MediaModels;
 
 import android.content.Context;
 import android.net.Uri;
@@ -7,9 +7,10 @@ import com.google.android.exoplayer.MediaCodecAudioTrackRenderer;
 import com.google.android.exoplayer.MediaCodecVideoTrackRenderer;
 import com.google.android.exoplayer.TrackRenderer;
 import com.google.android.exoplayer.text.TextTrackRenderer;
-import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.Renderers.Renderer;
-import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.Renderers.RendererInterfaces.MediaListener;
-import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.Renderers.RendererInterfaces.RendererListener;
+import com.jfowler.onramp.simpleexoplayer.Renderers.Renderer;
+import com.jfowler.onramp.simpleexoplayer.Renderers.RendererInterfaces.MediaListener;
+import com.jfowler.onramp.simpleexoplayer.Renderers.RendererInterfaces.RendererListener;
+
 
 
 /**

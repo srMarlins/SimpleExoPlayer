@@ -1,4 +1,4 @@
-package com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer;
+package com.jfowler.onramp.simpleexoplayer;
 
 import android.content.Context;
 import android.view.Surface;
@@ -9,8 +9,8 @@ import com.google.android.exoplayer.ExoPlayer;
 import com.google.android.exoplayer.MediaCodecVideoTrackRenderer;
 import com.google.android.exoplayer.TrackRenderer;
 import com.google.android.exoplayer.util.PlayerControl;
-import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.Media;
-import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.Renderers.Renderer;
+import com.jfowler.onramp.simpleexoplayer.MediaModels.Media;
+import com.jfowler.onramp.simpleexoplayer.Renderers.Renderer;
 
 /**
  * Created by jfowler on 8/27/15.

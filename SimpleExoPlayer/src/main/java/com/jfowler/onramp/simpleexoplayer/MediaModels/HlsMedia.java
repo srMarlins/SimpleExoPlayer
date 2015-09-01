@@ -1,10 +1,11 @@
-package com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels;
+package com.jfowler.onramp.simpleexoplayer.MediaModels;
 
 import android.content.Context;
 import android.net.Uri;
 
-import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.Renderers.HlsRenderer;
-import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer.MediaModels.Renderers.RendererInterfaces.MediaListener;
+import com.jfowler.onramp.simpleexoplayer.Renderers.HlsRenderer;
+import com.jfowler.onramp.simpleexoplayer.Renderers.RendererInterfaces.MediaListener;
+
 
 /**
  * Created by jfowler on 9/1/15.
