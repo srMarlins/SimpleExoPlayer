@@ -69,10 +69,6 @@ public class HlsRenderer extends Renderer implements ManifestFetcher.ManifestCal
         this.videoTrackRenderer = new MediaCodecVideoTrackRenderer(sampleSource,
                 MediaCodec.VIDEO_SCALING_MODE_SCALE_TO_FIT, 5000, this.handler, null, 50);
         this.audioTrackRenderer = new MediaCodecAudioTrackRenderer(sampleSource);
-        MetadataTrackRenderer<Map<String, Object>> id3Renderer = new MetadataTrackRenderer<>(
-                sampleSource, new Id3Parser(), null, this.handler.getLooper());
-        Eia608TrackRenderer closedCaptionRenderer = new Eia608TrackRenderer(sampleSource, null,
-                this.handler.getLooper());
     }
 
 
