@@ -12,6 +12,7 @@ Features
   - HLS streaming
   
 In Progress
+   - Demo application using the SimpleExoPlayer
    - DRM support
 
 *Please note that the MediaCodec class will often throw errors on the emulator while using this library.  Please test on devices before submitting bug reports.
