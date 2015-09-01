@@ -76,6 +76,11 @@ public class HlsRenderer extends Renderer implements ManifestFetcher.ManifestCal
     public void onSingleManifest(HlsMasterPlaylist hlsMasterPlaylist) {
         this.manifest = hlsMasterPlaylist;
         prepareRender(media.getContext(), rendererListener);
+        TrackRenderer[] array = new TrackRenderer[3];
+        array[TYPE_VIDEO] = videoTrackRenderer;
+        array[TYPE_AUDIO] = audioTrackRenderer;
+        array[TYPE_TEXT] = textTrackRenderer;
+        rendererListener.onPrepared(array);
     }
 
     @Override
