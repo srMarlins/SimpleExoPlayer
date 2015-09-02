@@ -39,7 +39,11 @@ public class SimpleExoPlayer {
                 setVideoSurface(surface, (MediaCodecVideoTrackRenderer) renders[Renderer.TYPE_VIDEO]);
                 exoPlayer.prepare(renders[0], renders[1]);
             }else {
-                exoPlayer.prepare(renders);
+                if(renders.length > 1){
+                    exoPlayer.prepare(renders[1]);
+                }else {
+                    exoPlayer.prepare(renders);
+                }
             }
         }
         mediaPlayerControl.start();
@@ -109,6 +113,10 @@ public class SimpleExoPlayer {
             isPlaying = mediaPlayerControl.isPlaying();
         }
         return isPlaying;
+    }
+
+    public MediaController.MediaPlayerControl getMediaPlayerControl(){
+        return mediaPlayerControl;
     }
 
     public void reinstantiateExoPlayer(){
