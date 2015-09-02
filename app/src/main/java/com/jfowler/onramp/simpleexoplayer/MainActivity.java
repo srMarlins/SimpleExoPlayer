@@ -6,10 +6,8 @@ import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 
-import com.jfowler.onramp.simpleexoplayer.MediaModels.Media;
 import com.jfowler.onramp.simpleexoplayer.fragments.MediaSelectorFragment;
 import com.jfowler.onramp.simpleexoplayer.fragments.NavigationDrawerFragment;
-import com.jfowler.onramp.simpleexoplayer.fragments.VideoFragment;
 import com.jfowler.onramp.simpleexoplayerdemo.R;
 
 public class MainActivity extends AppCompatActivity

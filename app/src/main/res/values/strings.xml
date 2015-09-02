@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">SimpleExoPlayerDemo</string>
 
-    <string name="title_activity_main">Home</string>
+    <string name="title_activity_main">SimpleExoPlayer</string>
 
     <string name="option_standard">Other</string>
     <string name="option_hls">HLS</string>

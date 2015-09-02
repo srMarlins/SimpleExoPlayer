@@ -56,7 +56,7 @@ public class MediaSelectorFragment extends Fragment{
         mTabHost.addTab(specVideo);
         TabHost.TabSpec specAudio = mTabHost.newTabSpec(getResources().getString(R.string.tab2_name));
         specAudio.setContent(R.id.listview_audio);
-        specAudio.setIndicator(getResources().getString(R.string.tab1_name));
+        specAudio.setIndicator(getResources().getString(R.string.tab2_name));
 
         mTabHost.addTab(specAudio);
 

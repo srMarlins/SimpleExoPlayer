@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:text="DASH"
-        android:textColor="#EF5350"
+        android:textColor="@color/accent"
         android:id="@+id/text_media_type"/>
 
 </LinearLayout>
