@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 
+import com.jfowler.onramp.simpleexoplayer.Utils.MediaFactory;
 import com.jfowler.onramp.simpleexoplayer.fragments.MediaSelectorFragment;
 import com.jfowler.onramp.simpleexoplayer.fragments.NavigationDrawerFragment;
 import com.jfowler.onramp.simpleexoplayerdemo.R;
@@ -43,12 +44,12 @@ public class MainActivity extends AppCompatActivity
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-            .replace(R.id.container, MediaSelectorFragment.newInstance(Samples.intTypeToString(position)))
+            .replace(R.id.container, MediaSelectorFragment.newInstance(MediaFactory.intToString(position)))
             .commit();
     }
 
     public void onSectionAttached(int number) {
-        mTitle = Samples.intTypeToString(number);
+        mTitle = MediaFactory.intToString(number);
     }
 
     public void restoreActionBar() {

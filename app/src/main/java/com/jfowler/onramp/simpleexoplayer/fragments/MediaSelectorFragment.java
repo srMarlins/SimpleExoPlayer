@@ -2,6 +2,7 @@ package com.jfowler.onramp.simpleexoplayer.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,6 +15,8 @@ import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.jfowler.onramp.simpleexoplayer.Samples;
+import com.jfowler.onramp.simpleexoplayer.Utils.MediaFactory;
+import com.jfowler.onramp.simpleexoplayer.VideoPlayerActivity;
 import com.jfowler.onramp.simpleexoplayerdemo.R;
 
 
@@ -23,7 +26,6 @@ import com.jfowler.onramp.simpleexoplayerdemo.R;
 public class MediaSelectorFragment extends Fragment{
 
     private static final String TAG = "MediaSelectorFragment";
-    public static final String MEDIA_TYPE = "mediaType";
 
     private TabHost mTabHost;
     private Context mContext;
@@ -31,7 +33,7 @@ public class MediaSelectorFragment extends Fragment{
     public static MediaSelectorFragment newInstance(String mediaType) {
         MediaSelectorFragment frag = new MediaSelectorFragment();
         Bundle args = new Bundle();
-        args.putInt(MEDIA_TYPE, Samples.stringTypeToIoInt(mediaType));
+        args.putInt(MediaFactory.MEDIA_TYPE_TAG, MediaFactory.stringToInt(mediaType));
         frag.setArguments(args);
         return frag;
     }
@@ -39,10 +41,10 @@ public class MediaSelectorFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_media_selector,container, false);
+        View rootView = inflater.inflate(R.layout.fragment_media_selector, container, false);
 
         Bundle args = getArguments();
-        int mediaType = args.getInt(MEDIA_TYPE);
+        int mediaType = args.getInt(MediaFactory.MEDIA_TYPE_TAG);
 
         mTabHost = (TabHost)rootView.findViewById(R.id.tabHost);
 
@@ -60,14 +62,20 @@ public class MediaSelectorFragment extends Fragment{
 
         mTabHost.addTab(specAudio);
 
-        MediaAdapter mediaAdapter = new MediaAdapter(mContext, Samples.getAllSampleByType(mediaType));
+        final Samples.Sample[] samples = Samples.getAllSampleByType(mediaType);
+        MediaAdapter mediaAdapter = new MediaAdapter(mContext, samples);
 
         ListView videoList = (ListView) rootView.findViewById(R.id.listview_video);
         videoList.setAdapter(mediaAdapter);
         videoList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                Samples.Sample holder = samples[position];
+                Intent videoIntent = new Intent(mContext, VideoPlayerActivity.class);
+                videoIntent.putExtra(MediaFactory.MEDIA_URI_TAG, holder.uri);
+                videoIntent.putExtra(MediaFactory.MEDIA_TYPE_TAG, MediaFactory.MEDIA_TYPE_VIDEO);
+                videoIntent.putExtra(MediaFactory.STREAM_TYPE_TAG, holder.type);
+                startActivity(videoIntent);
             }
         });
 
@@ -133,7 +141,7 @@ public class MediaSelectorFragment extends Fragment{
             }
 
             holder.mMediaName.setText(currentSample.name);
-            holder.mMediaType.setText(Samples.intTypeToString(currentSample.type));
+            holder.mMediaType.setText(MediaFactory.intToString(currentSample.type));
 
 
             return convertView;
