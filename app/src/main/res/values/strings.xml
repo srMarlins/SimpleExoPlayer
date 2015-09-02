@@ -1,6 +1,21 @@
 <resources>
     <string name="app_name">SimpleExoPlayerDemo</string>
 
+    <string name="title_activity_main">SimpleExoPlayer</string>
+
+    <string name="option_standard">Standard</string>
+    <string name="option_hls">HLS</string>
+    <string name="option_dash">DASH</string>
+    <string name="option_smoothstreaming">SmoothStreaming</string>
+
+    <string name="tab1_name">Video</string>
+    <string name="tab2_name">Audio</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_activity_player">PlayerActivity</string>
+
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
 </resources>
