@@ -12,6 +12,7 @@ import com.google.android.exoplayer.upstream.Allocator;
 import com.google.android.exoplayer.upstream.DataSource;
 import com.google.android.exoplayer.upstream.DefaultAllocator;
 import com.google.android.exoplayer.upstream.DefaultUriDataSource;
+import com.jfowler.onramp.simpleexoplayer.Renderers.Renderer;
 
 /**
  * Created by jfowler on 8/27/15.
@@ -34,9 +35,10 @@ public class VideoMedia extends Media {
         DataSource dataSource = new DefaultUriDataSource(context, getUserAgent());
         ExtractorSampleSource sampleSource = new ExtractorSampleSource(
                 getUri(), dataSource, allocator, bufferSegmentSize * bufferSegmentCount);
-        array[0] = new MediaCodecAudioTrackRenderer(sampleSource);
-        array[1] = new MediaCodecVideoTrackRenderer(
+        array[Renderer.TYPE_VIDEO] = new MediaCodecVideoTrackRenderer(
                 sampleSource, MediaCodec.VIDEO_SCALING_MODE_SCALE_TO_FIT);
+        array[Renderer.TYPE_AUDIO] = new MediaCodecAudioTrackRenderer(sampleSource);
+
         return array;
     }
 }

@@ -88,6 +88,15 @@ public class VideoPlayerActivity extends AppCompatActivity {
                         mMediaPlayerControl.seekTo(mSeekPos);
                     }
                 }, uri, Util.getUserAgent(this, getString(R.string.app_name)), streamType, mediaType);
+            }else{
+                media = MediaFactory.getStandardMedia(this, uri, Util.getUserAgent(this, getString(R.string.app_name)), mediaType);
+                if(mediaType == MediaFactory.MEDIA_TYPE_VIDEO){
+                    mSimpleExoPlayer.playMedia(this, null, mVideoView.getHolder().getSurface(), media);
+                }else{
+                    mSimpleExoPlayer.playMedia(this, null, null, media);
+                }
+
+                mMediaPlayerControl.seekTo(mSeekPos);
             }
         }
 
