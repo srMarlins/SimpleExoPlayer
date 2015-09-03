@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/srmarlins/SimpleExoPlayer'
     gitUrl = 'https://github.com/srmarlins/SimpleExoPlayer.git'
 
-    libraryVersion = '0.9.3'
+    libraryVersion = '0.9.4'
 
     developerId = 'srmarlins'
     developerName = 'Jared Fowler'
