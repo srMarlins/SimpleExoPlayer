@@ -1,10 +1,12 @@
 package com.jfowler.onramp.simpleexoplayer;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.widget.Toast;
 
 import com.jfowler.onramp.simpleexoplayer.Utils.MediaFactory;
 import com.jfowler.onramp.simpleexoplayer.fragments.MediaSelectorFragment;
@@ -13,6 +15,12 @@ import com.jfowler.onramp.simpleexoplayerdemo.R;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+
+    public static final int PLAY_MEDIA_REQUEST = 0;
+
+    public static final int PLAY_MEDIA_CANCELED = -1;
+
+    public static final String ERROR_STRING_TAG = "errorTag";
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -46,6 +54,13 @@ public class MainActivity extends AppCompatActivity
         fragmentManager.beginTransaction()
             .replace(R.id.container, MediaSelectorFragment.newInstance(MediaFactory.intToString(position)))
             .commit();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == PLAY_MEDIA_CANCELED){
+            Toast.makeText(MainActivity.this, data.getStringExtra(ERROR_STRING_TAG), Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void onSectionAttached(int number) {
