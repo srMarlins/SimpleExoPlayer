@@ -1,6 +1,6 @@
 package com.jfowler.onramp.simpleexoplayer;
 
-import android.provider.MediaStore;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -9,7 +9,6 @@ import android.widget.MediaController;
 import android.widget.VideoView;
 
 import com.google.android.exoplayer.util.Util;
-import com.jfowler.onramp.simpleexoplayer.MediaModels.AdaptiveMedia;
 import com.jfowler.onramp.simpleexoplayer.MediaModels.Media;
 import com.jfowler.onramp.simpleexoplayer.Renderers.RendererInterfaces.MediaListener;
 import com.jfowler.onramp.simpleexoplayer.Utils.MediaFactory;
@@ -68,7 +67,7 @@ public class VideoPlayerActivity extends AppCompatActivity {
         mVideoView.setMediaController(mMediaController);
     }
 
-    private Media prepareMedia() throws IllegalStateException{
+    private Media prepareMedia() throws Exception{
         Bundle extras = getIntent().getExtras();
         Media media = null;
         if(extras != null){
@@ -84,7 +83,6 @@ public class VideoPlayerActivity extends AppCompatActivity {
                         }else{
                             mSimpleExoPlayer.playMedia(VideoPlayerActivity.this, null, null, media);
                         }
-
                         mMediaPlayerControl.seekTo(mSeekPos);
                     }
                 }, uri, Util.getUserAgent(this, getString(R.string.app_name)), streamType, mediaType);
@@ -101,7 +99,7 @@ public class VideoPlayerActivity extends AppCompatActivity {
         }
 
         if(media == null){
-            throw new IllegalStateException("Invalid Media parameters were given");
+            throw new Exception("Invalid Media parameters were given");
         }
 
         return media;
@@ -111,7 +109,15 @@ public class VideoPlayerActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        prepareMedia();
+        try {
+            prepareMedia();
+        }catch (Exception e){
+            mSimpleExoPlayer.stopMedia();
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra(MainActivity.ERROR_STRING_TAG, e.getMessage());
+            setResult(MainActivity.PLAY_MEDIA_CANCELED, resultIntent);
+            finish();
+        }
     }
 
     @Override

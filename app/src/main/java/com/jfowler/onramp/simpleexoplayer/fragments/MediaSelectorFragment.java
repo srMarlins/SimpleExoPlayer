@@ -14,6 +14,8 @@ import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
+import com.jfowler.onramp.simpleexoplayer.AudioPlayerActivity;
+import com.jfowler.onramp.simpleexoplayer.MainActivity;
 import com.jfowler.onramp.simpleexoplayer.Samples;
 import com.jfowler.onramp.simpleexoplayer.Utils.MediaFactory;
 import com.jfowler.onramp.simpleexoplayer.VideoPlayerActivity;
@@ -62,34 +64,39 @@ public class MediaSelectorFragment extends Fragment{
 
         mTabHost.addTab(specAudio);
 
-        final Samples.Sample[] samples = Samples.getAllSampleByType(mediaType);
-        MediaAdapter mediaAdapter = new MediaAdapter(mContext, samples);
+        final Samples.Sample[] videoSamples = Samples.getAllVideoSamplesByType(mediaType);
+        MediaAdapter videoAdapter = new MediaAdapter(mContext, videoSamples);
 
         ListView videoList = (ListView) rootView.findViewById(R.id.listview_video);
-        videoList.setAdapter(mediaAdapter);
+        videoList.setAdapter(videoAdapter);
         videoList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Samples.Sample holder = samples[position];
-                Intent videoIntent = new Intent(mContext, VideoPlayerActivity.class);
-                videoIntent.putExtra(MediaFactory.MEDIA_URI_TAG, holder.uri);
-                videoIntent.putExtra(MediaFactory.MEDIA_TYPE_TAG, MediaFactory.MEDIA_TYPE_VIDEO);
-                videoIntent.putExtra(MediaFactory.STREAM_TYPE_TAG, holder.type);
-                startActivity(videoIntent);
+                startMediaIntent(videoSamples[position], MediaFactory.MEDIA_TYPE_VIDEO);
             }
         });
 
         ListView audioList = (ListView) rootView.findViewById(R.id.listview_audio);
-        audioList.setAdapter(mediaAdapter);
+        final Samples.Sample[] audioSamples = Samples.getAllAudioSamplesByType(mediaType);
+        MediaAdapter audioAdapter = new MediaAdapter(mContext, audioSamples);
+        audioList.setAdapter(audioAdapter);
         audioList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                startMediaIntent(audioSamples[position], MediaFactory.MEDIA_TYPE_AUDIO);
             }
         });
 
 
         return rootView;
+    }
+
+    public void startMediaIntent(Samples.Sample sample, int mediaType){
+        Intent videoIntent = new Intent(mContext, (mediaType == MediaFactory.MEDIA_TYPE_VIDEO) ? VideoPlayerActivity.class:AudioPlayerActivity.class);
+        videoIntent.putExtra(MediaFactory.MEDIA_URI_TAG, sample.uri);
+        videoIntent.putExtra(MediaFactory.MEDIA_TYPE_TAG, mediaType);
+        videoIntent.putExtra(MediaFactory.STREAM_TYPE_TAG, sample.type);
+        startActivityForResult(videoIntent, MainActivity.PLAY_MEDIA_REQUEST);
     }
 
     @Override

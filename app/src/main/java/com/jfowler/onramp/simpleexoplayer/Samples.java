@@ -19,6 +19,7 @@ import com.jfowler.onramp.simpleexoplayer.Utils.MediaFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -58,62 +59,28 @@ public class Samples {
                             + "84308FF04844498CE6FBCE4731507882B8307798&key=ik0", MediaFactory.STREAM_TYPE_DASH),
     };
 
-    public static final Sample[] YOUTUBE_DASH_WEBM = new Sample[]{
-            new Sample("Google Glass",
-                    "http://www.youtube.com/api/manifest/dash/id/bf5bb2419360daf1/source/youtube?"
-                            + "as=fmp4_audio_clear,webm2_sd_hd_clear&sparams=ip,ipbits,expire,source,id,as&ip=0.0.0.0&"
-                            + "ipbits=0&expire=19000000000&signature=249B04F79E984D7F86B4D8DB48AE6FAF41C17AB3."
-                            + "7B9F0EC0505E1566E59B8E488E9419F253DDF413&key=ik0", MediaFactory.STREAM_TYPE_DASH),
-            new Sample("Google Play",
-                    "http://www.youtube.com/api/manifest/dash/id/3aa39fa2cc27967f/source/youtube?"
-                            + "as=fmp4_audio_clear,webm2_sd_hd_clear&sparams=ip,ipbits,expire,source,id,as&ip=0.0.0.0&"
-                            + "ipbits=0&expire=19000000000&signature=B1C2A74783AC1CC4865EB312D7DD2D48230CC9FD."
-                            + "BD153B9882175F1F94BFE5141A5482313EA38E8D&key=ik0", MediaFactory.STREAM_TYPE_DASH),
-    };
 
     public static final Sample[] SMOOTHSTREAMING = new Sample[]{
             new Sample("Super speed",
-                    "http://playready.directtaps.net/smoothstreaming/SSWSS720H264/SuperSpeedway_720.ism",
+                    "http://playready.directtaps.net/smoothstreaming/SSWSS720H264/SuperSpeedway_720.ism/manifest",
                     MediaFactory.STREAM_TYPE_SS),
-            new Sample("Super speed (PlayReady)",
-                    "http://playready.directtaps.net/smoothstreaming/SSWSS720H264PR/SuperSpeedway_720.ism",
+            new Sample("Big Buck Bunny Multi Res",
+                    "http://mediadl.microsoft.com/mediadl/iisnet/smoothmedia/Experience/BigBuckBunny_720p.ism/Manifest",
                     MediaFactory.STREAM_TYPE_SS),
+            new Sample("To The Limit",
+                    "http://playready.directtaps.net/smoothstreaming/TTLSS720VC1/To_The_Limit_720.ism/Manifest",
+                    MediaFactory.STREAM_TYPE_SS),
+
     };
 
-    public static final Sample[] WIDEVINE_GTS = new Sample[]{
-            new Sample("WV: HDCP not specified", "d286538032258a1c",
-                    "http://www.youtube.com/api/manifest/dash/id/d286538032258a1c/source/youtube?"
-                            + "as=fmp4_audio_cenc,fmp4_sd_hd_cenc&sparams=ip,ipbits,expire,source,id,as&ip=0.0.0.0"
-                            + "&ipbits=0&expire=19000000000&signature=477CF7D478BE26C205045D507E9358F85F84C065."
-                            + "8971631EB657BC33EC2F48A2FF4211956760C3E9&key=ik0", MediaFactory.STREAM_TYPE_DASH),
-            new Sample("WV: HDCP not required", "48fcc369939ac96c",
-                    "http://www.youtube.com/api/manifest/dash/id/48fcc369939ac96c/source/youtube?"
-                            + "as=fmp4_audio_cenc,fmp4_sd_hd_cenc&sparams=ip,ipbits,expire,source,id,as&ip=0.0.0.0"
-                            + "&ipbits=0&expire=19000000000&signature=171DAE48D00B5BE7434BC1A9F84DAE0463C7EA7A."
-                            + "0925B4DBB5605BEE9F5D088C48F25F5108E96191&key=ik0", MediaFactory.STREAM_TYPE_DASH),
-            new Sample("WV: HDCP required", "e06c39f1151da3df",
-                    "http://www.youtube.com/api/manifest/dash/id/e06c39f1151da3df/source/youtube?"
-                            + "as=fmp4_audio_cenc,fmp4_sd_hd_cenc&sparams=ip,ipbits,expire,source,id,as&ip=0.0.0.0"
-                            + "&ipbits=0&expire=19000000000&signature=8D3B8AF4E3F72B7F127C8D0D39B7AFCF37B30519."
-                            + "A118BADEBF3582AD2CC257B0EE6E579C6955D8AA&key=ik0", MediaFactory.STREAM_TYPE_DASH),
-            new Sample("WV: Secure video path required", "0894c7c8719b28a0",
-                    "http://www.youtube.com/api/manifest/dash/id/0894c7c8719b28a0/source/youtube?"
-                            + "as=fmp4_audio_cenc,fmp4_sd_hd_cenc&sparams=ip,ipbits,expire,source,id,as&ip=0.0.0.0"
-                            + "&ipbits=0&expire=19000000000&signature=A41D835C7387885A4A820628F57E481E00095931."
-                            + "9D50DBEEB5E37344647EE11BDA129A7FCDE8B7B9&key=ik0", MediaFactory.STREAM_TYPE_DASH),
-            new Sample("WV: HDCP + secure video path required", "efd045b1eb61888a",
-                    "http://www.youtube.com/api/manifest/dash/id/efd045b1eb61888a/source/youtube?"
-                            + "as=fmp4_audio_cenc,fmp4_sd_hd_cenc&sparams=ip,ipbits,expire,source,id,as&ip=0.0.0.0"
-                            + "&ipbits=0&expire=19000000000&signature=A97C9032C9D0C74F1643DB17C178873887C229E4."
-                            + "0A657BF6F23C8BC1538F276137383478330B76DE&key=ik0", MediaFactory.STREAM_TYPE_DASH),
-            new Sample("WV: 30s license duration (fails at ~30s)", "f9a34cab7b05881a",
-                    "http://www.youtube.com/api/manifest/dash/id/f9a34cab7b05881a/source/youtube?"
-                            + "as=fmp4_audio_cenc,fmp4_sd_hd_cenc&sparams=ip,ipbits,expire,source,id,as&ip=0.0.0.0"
-                            + "&ipbits=0&expire=19000000000&signature=80648A12A7D5FC1FA02B52B4250E4EB74CF0C5FD."
-                            + "66A261130CA137AA5C541EA9CED2DBF240829EE6&key=ik0", MediaFactory.STREAM_TYPE_DASH),
+    public static final Sample[] SMOOTHSTREAM_AUDIO = new Sample[]{
+        new Sample("Taxi3",
+                "http://playready.directtaps.net/smoothstreaming/ISMAAACLC/Taxi3_AACLC.ism/Manifest",
+                MediaFactory.STREAM_TYPE_SS)
     };
 
-    public static final Sample[] HLS = new Sample[]{
+
+    public static final Sample[] HLS_VIDEO = new Sample[]{
             new Sample("Apple master playlist",
                     "https://devimages.apple.com.edgekey.net/streaming/examples/bipbop_4x3/"
                             + "bipbop_4x3_variant.m3u8", MediaFactory.STREAM_TYPE_HLS),
@@ -123,19 +90,16 @@ public class Samples {
             new Sample("Apple TS media playlist",
                     "https://devimages.apple.com.edgekey.net/streaming/examples/bipbop_4x3/gear1/"
                             + "prog_index.m3u8", MediaFactory.STREAM_TYPE_HLS),
+    };
+
+    public static final Sample[] HLS_AUDIO = new Sample[]{
             new Sample("Apple AAC media playlist",
                     "https://devimages.apple.com.edgekey.net/streaming/examples/bipbop_4x3/gear0/"
                             + "prog_index.m3u8", MediaFactory.STREAM_TYPE_HLS),
-            new Sample("Apple ID3 metadata", "http://devimages.apple.com/samplecode/adDemo/ad.m3u8",
-                    MediaFactory.STREAM_TYPE_HLS),
     };
 
-    public static final Sample[] MISC = new Sample[]{
+    public static final Sample[] STANDARD_VIDEO = new Sample[]{
             new Sample("Dizzy", "http://html5demos.com/assets/dizzy.mp4", MediaFactory.STREAM_TYPE_STANDARD),
-            new Sample("Apple AAC 10s", "https://devimages.apple.com.edgekey.net/"
-                    + "streaming/examples/bipbop_4x3/gear0/fileSequence0.aac", MediaFactory.STREAM_TYPE_STANDARD),
-            new Sample("Apple TS 10s", "https://devimages.apple.com.edgekey.net/streaming/examples/"
-                    + "bipbop_4x3/gear1/fileSequence0.ts", MediaFactory.STREAM_TYPE_STANDARD),
             new Sample("Android screens (Matroska)", "http://storage.googleapis.com/exoplayer-test-media-1/"
                     + "mkv/android-screens-lavf-56.36.100-aac-avc-main-1280x720.mkv",
                     MediaFactory.STREAM_TYPE_STANDARD),
@@ -144,27 +108,33 @@ public class Samples {
                             + "sparams=ip,ipbits,expire,source,id&ip=0.0.0.0&ipbits=0&expire=19000000000&signature="
                             + "513F28C7FDCBEC60A66C86C9A393556C99DC47FB.04C88036EEE12565A1ED864A875A58F15D8B5300"
                             + "&key=ik0", MediaFactory.STREAM_TYPE_STANDARD),
-            new Sample("Google Play (MP3 Audio)",
-                    "http://storage.googleapis.com/exoplayer-test-media-0/play.mp3", MediaFactory.STREAM_TYPE_STANDARD),
-            new Sample("Google Glass (WebM Video with Vorbis Audio)",
-                    "http://demos.webmproject.org/exoplayer/glass_vp9_vorbis.webm", MediaFactory.STREAM_TYPE_STANDARD),
     };
 
-    public static Sample[] getAllSamples(){
+    public static final Sample[] STANDARD_AUDIO = new Sample[]{
+            new Sample("Apple AAC 10s", "https://devimages.apple.com.edgekey.net/"
+                    + "streaming/examples/bipbop_4x3/gear0/fileSequence0.aac", MediaFactory.STREAM_TYPE_STANDARD),
+            new Sample("Apple TS 10s", "https://devimages.apple.com.edgekey.net/streaming/examples/"
+                    + "bipbop_4x3/gear1/fileSequence0.ts", MediaFactory.STREAM_TYPE_STANDARD),
+            new Sample("Google Play (MP3 Audio)",
+                    "http://storage.googleapis.com/exoplayer-test-media-0/play.mp3", MediaFactory.STREAM_TYPE_STANDARD),
+            new Sample("WUFT Live Stream",
+                    "http://ice02.jou.ufl.edu:8000/wufthd164", MediaFactory.STREAM_TYPE_STANDARD),
+    };
+
+    public static Sample[] getAllVideoSamples(){
         ArrayList<Sample> samples = new ArrayList<>();
-        samples.addAll(Arrays.asList(Samples.HLS));
-        samples.addAll(Arrays.asList(Samples.MISC));
+        samples.addAll(Arrays.asList(Samples.HLS_VIDEO));
         samples.addAll(Arrays.asList(Samples.SMOOTHSTREAMING));
         samples.addAll(Arrays.asList(Samples.YOUTUBE_DASH_MP4));
-        samples.addAll(Arrays.asList(Samples.YOUTUBE_DASH_WEBM));
+        samples.addAll(Arrays.asList(Samples.STANDARD_VIDEO));
 
         return samples.toArray(new Sample[samples.size()]);
     }
 
-    public static Sample[] getAllSampleByType(int type){
+    public static Sample[] getAllVideoSamplesByType(int type){
         ArrayList<Sample> samples = new ArrayList<>();
-        for (Sample sample: getAllSamples()) {
-            if(type == type){
+        for (Sample sample: getAllVideoSamples()) {
+            if(type == sample.type){
                 samples.add(sample);
             }
         }
@@ -172,6 +142,25 @@ public class Samples {
         return samples.toArray(new Sample[samples.size()]);
     }
 
+    public static Sample[] getAllAudioSamples(){
+        ArrayList<Sample> samples = new ArrayList<>();
+        samples.addAll(Arrays.asList(getAllVideoSamples()));
+        samples.addAll(Arrays.asList(Samples.SMOOTHSTREAM_AUDIO));
+        samples.addAll(Arrays.asList(Samples.STANDARD_AUDIO));
+        samples.addAll(Arrays.asList(Samples.HLS_AUDIO));
+
+        return samples.toArray(new Sample[samples.size()]);
+    }
+
+    public static Sample[] getAllAudioSamplesByType(int type){
+        ArrayList<Sample> samples = new ArrayList<>();
+        for (Sample sample: getAllAudioSamples()) {
+            if(type == sample.type){
+                samples.add(sample);
+            }
+        }
+        return samples.toArray(new Sample[samples.size()]);
+    }
 
     private Samples() {
     }
