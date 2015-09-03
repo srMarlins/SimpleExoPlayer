@@ -10,6 +10,7 @@ import com.google.android.exoplayer.TrackRenderer;
 import com.google.android.exoplayer.chunk.VideoFormatSelectorUtil;
 import com.google.android.exoplayer.hls.HlsChunkSource;
 import com.google.android.exoplayer.hls.HlsMasterPlaylist;
+import com.google.android.exoplayer.hls.HlsPlaylist;
 import com.google.android.exoplayer.hls.HlsPlaylistParser;
 import com.google.android.exoplayer.hls.HlsSampleSource;
 import com.google.android.exoplayer.upstream.DataSource;
@@ -23,12 +24,12 @@ import java.io.IOException;
 /**
  * Created by jfowler on 8/28/15.
  */
-public class HlsRenderer extends Renderer implements ManifestFetcher.ManifestCallback<HlsMasterPlaylist>{
+public class HlsRenderer extends Renderer implements ManifestFetcher.ManifestCallback<HlsPlaylist>{
 
     private static final int BUFFER_SEGMENT_SIZE = 256 * 1024;
     private static final int BUFFER_SEGMENTS = 64;
 
-    private HlsMasterPlaylist manifest;
+    private HlsPlaylist manifest;
 
     public HlsRenderer(Media media) {
         super(media);
@@ -42,18 +43,19 @@ public class HlsRenderer extends Renderer implements ManifestFetcher.ManifestCal
         this.rendererListener = rendererListener;
 
         int[] variantIndices = null;
+        if(manifest instanceof HlsMasterPlaylist) {
+            try {
+                variantIndices = VideoFormatSelectorUtil.selectVideoFormatsForDefaultDisplay(
+                        context, ((HlsMasterPlaylist)manifest).variants, null, false);
+            } catch (MediaCodecUtil.DecoderQueryException e) {
+                e.printStackTrace();
+                return;
+            }
 
-        try {
-            variantIndices = VideoFormatSelectorUtil.selectVideoFormatsForDefaultDisplay(
-                    context, manifest.variants, null, false);
-        } catch (MediaCodecUtil.DecoderQueryException e) {
-            e.printStackTrace();
-            return;
+            if (variantIndices.length == 0) {
+                throw new IllegalStateException("No variants selected.");
+            }
         }
-        if (variantIndices.length == 0) {
-            throw new IllegalStateException("No variants selected.");
-        }
-
 
         DataSource dataSource = new DefaultUriDataSource(context, bandwidthMeter, media.getUserAgent());
         HlsChunkSource chunkSource = new HlsChunkSource(dataSource, media.getUri().toString(), manifest, bandwidthMeter,
@@ -67,8 +69,8 @@ public class HlsRenderer extends Renderer implements ManifestFetcher.ManifestCal
 
 
     @Override
-    public void onSingleManifest(HlsMasterPlaylist hlsMasterPlaylist) {
-        this.manifest = hlsMasterPlaylist;
+    public void onSingleManifest(HlsPlaylist hlsPlaylist) {
+        this.manifest = hlsPlaylist;
         prepareRender(media.getContext(), rendererListener);
         TrackRenderer[] array = new TrackRenderer[3];
         array[TYPE_VIDEO] = videoTrackRenderer;

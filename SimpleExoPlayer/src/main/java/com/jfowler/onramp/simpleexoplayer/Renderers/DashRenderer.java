@@ -23,6 +23,7 @@ import com.google.android.exoplayer.dash.mpd.Period;
 import com.google.android.exoplayer.dash.mpd.Representation;
 import com.google.android.exoplayer.dash.mpd.UtcTimingElement;
 import com.google.android.exoplayer.dash.mpd.UtcTimingElementResolver;
+import com.google.android.exoplayer.drm.UnsupportedDrmException;
 import com.google.android.exoplayer.text.TextTrackRenderer;
 import com.google.android.exoplayer.text.ttml.TtmlParser;
 import com.google.android.exoplayer.text.webvtt.WebvttParser;
@@ -78,6 +79,11 @@ public class DashRenderer extends Renderer implements UtcTimingElementResolver.U
         if (audioAdaptationSetIndex != -1) {
             audioAdaptationSet = period.adaptationSets.get(audioAdaptationSetIndex);
             hasContentProtection |= audioAdaptationSet.hasContentProtection();
+        }
+
+        //Unfortunately SimpleExoPlayer does not support DRM at this time
+        if(hasContentProtection){
+            throw new IllegalStateException("SimpleExoPlayer does not support DRM");
         }
 
         // Fail if we have neither video or audio.

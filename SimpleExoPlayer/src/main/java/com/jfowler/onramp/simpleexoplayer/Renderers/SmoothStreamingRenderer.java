@@ -48,6 +48,10 @@ public class SmoothStreamingRenderer extends Renderer implements ManifestFetcher
         this.rendererListener = rendererListener;
         Handler mainHandler = handler;
 
+        if(manifest.protectionElement != null){
+            throw new IllegalStateException("SimpleExoPlayer does not support DRM protected content");
+        }
+
         // Obtain stream elements for playback.
         int audioStreamElementCount = 0;
         int textStreamElementCount = 0;

@@ -86,8 +86,6 @@ public class VideoPlayerActivity extends AppCompatActivity {
                         }
 
                         mMediaPlayerControl.seekTo(mSeekPos);
-
-                        mMediaController.show();
                     }
                 }, uri, Util.getUserAgent(this, getString(R.string.app_name)), streamType, mediaType);
             }
