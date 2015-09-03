@@ -32,9 +32,10 @@ In Progress
             
 ### Adaptive Playback - Dash/HLS/SmoothStreaming
     SimpleExoPlayer player = new SimpleExoPlayer();
-    DashMedia dashMedia = new DashMedia(context, new MediaListener() {
-                                                  @Override
-                                                  public void mediaPrepared(Media media) {
-                                                  mSimpleExoPlayer.playMedia(VideoPlayerActivity.this, null, 		mVideoView.getHolder().getSurface(), media);
-                                                  }
-                              }, Uri.parse(uri), userAgent);
+    DashMedia dashMedia = 
+      new DashMedia(context, new MediaListener() {
+                    @Override
+                    public void mediaPrepared(Media media) {
+                      mSimpleExoPlayer.playMedia(VideoPlayerActivity.this, null, mVideoView.getHolder().getSurface(), media);
+                    }
+                  }, Uri.parse(uri), userAgent);
