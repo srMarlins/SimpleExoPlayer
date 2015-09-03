@@ -4,7 +4,7 @@
 An easy to use wrapper for Google's ExoPlayer class (A better replacement for MediaPlayer).
 To use put this line into your app's build.gradle file
 
-  compile 'com.srmarlins.simpleexoplayer:simpleexoplayer:X.X.X'
+  `compile 'com.srmarlins.simpleexoplayer:simpleexoplayer:X.X.X'`
   
 and replace the X.X.X with your desired version number.
 
