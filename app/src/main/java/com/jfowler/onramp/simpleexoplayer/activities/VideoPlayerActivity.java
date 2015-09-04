@@ -1,4 +1,4 @@
-package com.jfowler.onramp.simpleexoplayer;
+package com.jfowler.onramp.simpleexoplayer.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +11,7 @@ import android.widget.VideoView;
 import com.google.android.exoplayer.util.Util;
 import com.jfowler.onramp.simpleexoplayer.MediaModels.Media;
 import com.jfowler.onramp.simpleexoplayer.Renderers.RendererInterfaces.MediaListener;
+import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer;
 import com.jfowler.onramp.simpleexoplayer.Utils.MediaFactory;
 import com.jfowler.onramp.simpleexoplayerdemo.R;
 
@@ -46,22 +47,26 @@ public class VideoPlayerActivity extends AppCompatActivity {
 
         mVideoView = (VideoView) findViewById(R.id.videoViewSurface);
 
+        prepareMediaController();
+
         mVideoView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(mMediaController != null){
+                if (mMediaController != null) {
                     mMediaController.show();
                 }
                 return false;
             }
         });
 
+    }
+
+    private void prepareMediaController(){
         mMediaController = new MediaController(VideoPlayerActivity.this);
+        //The SimpleExoPlayer object contains a MediaPlayerControl which can be used with Android's
+        //MediaController class
         mMediaPlayerControl = mSimpleExoPlayer.getMediaPlayerControl();
-
-
-
-        //Here we retrieve the ExoPlayer's MediaPlayerControl object to control playback
+        //Associate the MediaController with the VideoView we're playing the media through
         mMediaController.setMediaPlayer(mMediaPlayerControl);
         mMediaController.setAnchorView(mVideoView);
         mVideoView.setMediaController(mMediaController);
