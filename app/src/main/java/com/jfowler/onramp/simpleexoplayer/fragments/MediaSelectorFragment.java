@@ -14,11 +14,11 @@ import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
-import com.jfowler.onramp.simpleexoplayer.AudioPlayerActivity;
-import com.jfowler.onramp.simpleexoplayer.MainActivity;
-import com.jfowler.onramp.simpleexoplayer.Utils.Samples;
-import com.jfowler.onramp.simpleexoplayer.Utils.MediaFactory;
-import com.jfowler.onramp.simpleexoplayer.VideoPlayerActivity;
+import com.jfowler.onramp.simpleexoplayer.activities.AudioPlayerActivity;
+import com.jfowler.onramp.simpleexoplayer.activities.MainActivity;
+import com.jfowler.onramp.simpleexoplayer.utils.Samples;
+import com.jfowler.onramp.simpleexoplayer.utils.MediaFactory;
+import com.jfowler.onramp.simpleexoplayer.activities.VideoPlayerActivity;
 import com.jfowler.onramp.simpleexoplayerdemo.R;
 
 

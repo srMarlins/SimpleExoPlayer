@@ -1,4 +1,4 @@
-package com.jfowler.onramp.simpleexoplayer;
+package com.jfowler.onramp.simpleexoplayer.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +11,8 @@ import android.widget.VideoView;
 import com.google.android.exoplayer.util.Util;
 import com.jfowler.onramp.simpleexoplayer.MediaModels.Media;
 import com.jfowler.onramp.simpleexoplayer.Renderers.RendererInterfaces.MediaListener;
-import com.jfowler.onramp.simpleexoplayer.Utils.MediaFactory;
+import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer;
+import com.jfowler.onramp.simpleexoplayer.utils.MediaFactory;
 import com.jfowler.onramp.simpleexoplayerdemo.R;
 
 public class VideoPlayerActivity extends AppCompatActivity {

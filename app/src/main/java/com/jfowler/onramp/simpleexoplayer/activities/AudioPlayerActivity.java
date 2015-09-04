@@ -1,21 +1,18 @@
-package com.jfowler.onramp.simpleexoplayer;
+package com.jfowler.onramp.simpleexoplayer.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.TextView;
-import android.widget.VideoView;
 
 import com.google.android.exoplayer.util.Util;
 import com.jfowler.onramp.simpleexoplayer.MediaModels.Media;
 import com.jfowler.onramp.simpleexoplayer.Renderers.RendererInterfaces.MediaListener;
-import com.jfowler.onramp.simpleexoplayer.Utils.MediaFactory;
+import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer;
+import com.jfowler.onramp.simpleexoplayer.utils.MediaFactory;
 import com.jfowler.onramp.simpleexoplayerdemo.R;
 
 import java.net.MalformedURLException;

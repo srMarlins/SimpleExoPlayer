@@ -1,4 +1,4 @@
-package com.jfowler.onramp.simpleexoplayer;
+package com.jfowler.onramp.simpleexoplayer.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.Toast;
 
-import com.jfowler.onramp.simpleexoplayer.Utils.MediaFactory;
+import com.jfowler.onramp.simpleexoplayer.utils.MediaFactory;
 import com.jfowler.onramp.simpleexoplayer.fragments.MediaSelectorFragment;
 import com.jfowler.onramp.simpleexoplayer.fragments.NavigationDrawerFragment;
 import com.jfowler.onramp.simpleexoplayerdemo.R;

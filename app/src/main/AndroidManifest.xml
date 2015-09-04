@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.jfowler.onramp.simpleexoplayer.MainActivity"
+            android:name="com.jfowler.onramp.simpleexoplayer.activities.MainActivity"
             android:label="@string/title_activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,11 +19,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.jfowler.onramp.simpleexoplayer.VideoPlayerActivity"
+            android:name="com.jfowler.onramp.simpleexoplayer.activities.VideoPlayerActivity"
             android:label="@string/title_activity_player" >
         </activity>
         <activity
-            android:name="com.jfowler.onramp.simpleexoplayer.AudioPlayerActivity"
+            android:name="com.jfowler.onramp.simpleexoplayer.activities.AudioPlayerActivity"
             android:label="@string/title_activity_audio_player" >
         </activity>
     </application>

@@ -1,4 +1,4 @@
-package com.jfowler.onramp.simpleexoplayer.Utils;
+package com.jfowler.onramp.simpleexoplayer.utils;
 
 import android.content.Context;
 import android.net.Uri;
