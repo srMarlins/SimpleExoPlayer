@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.jfowler.onramp.simpleexoplayer.AudioPlayerActivity;
 import com.jfowler.onramp.simpleexoplayer.MainActivity;
-import com.jfowler.onramp.simpleexoplayer.Samples;
+import com.jfowler.onramp.simpleexoplayer.Utils.Samples;
 import com.jfowler.onramp.simpleexoplayer.Utils.MediaFactory;
 import com.jfowler.onramp.simpleexoplayer.VideoPlayerActivity;
 import com.jfowler.onramp.simpleexoplayerdemo.R;
@@ -92,11 +92,12 @@ public class MediaSelectorFragment extends Fragment{
     }
 
     public void startMediaIntent(Samples.Sample sample, int mediaType){
-        Intent videoIntent = new Intent(mContext, (mediaType == MediaFactory.MEDIA_TYPE_VIDEO) ? VideoPlayerActivity.class:AudioPlayerActivity.class);
-        videoIntent.putExtra(MediaFactory.MEDIA_URI_TAG, sample.uri);
-        videoIntent.putExtra(MediaFactory.MEDIA_TYPE_TAG, mediaType);
-        videoIntent.putExtra(MediaFactory.STREAM_TYPE_TAG, sample.type);
-        startActivityForResult(videoIntent, MainActivity.PLAY_MEDIA_REQUEST);
+        Intent mediaIntent = new Intent(mContext, (mediaType == MediaFactory.MEDIA_TYPE_VIDEO) ? VideoPlayerActivity.class:AudioPlayerActivity.class);
+        mediaIntent.putExtra(MediaFactory.MEDIA_NAME_TAG, sample.name);
+        mediaIntent.putExtra(MediaFactory.MEDIA_URI_TAG, sample.uri);
+        mediaIntent.putExtra(MediaFactory.MEDIA_TYPE_TAG, mediaType);
+        mediaIntent.putExtra(MediaFactory.STREAM_TYPE_TAG, sample.type);
+        startActivityForResult(mediaIntent, MainActivity.PLAY_MEDIA_REQUEST);
     }
 
     @Override

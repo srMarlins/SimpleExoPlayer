@@ -16,6 +16,7 @@ import com.jfowler.onramp.simpleexoplayer.Renderers.RendererInterfaces.MediaList
  */
 public class MediaFactory {
 
+    public static final String MEDIA_NAME_TAG = "mediaName";
     public static final String MEDIA_URI_TAG = "mediaUri";
     public static final String MEDIA_TYPE_TAG = "mediaType";
     public static final String STREAM_TYPE_TAG = "streamType";

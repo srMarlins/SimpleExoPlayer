@@ -46,22 +46,26 @@ public class VideoPlayerActivity extends AppCompatActivity {
 
         mVideoView = (VideoView) findViewById(R.id.videoViewSurface);
 
+        prepareMediaController();
+
         mVideoView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(mMediaController != null){
+                if (mMediaController != null) {
                     mMediaController.show();
                 }
                 return false;
             }
         });
 
+    }
+
+    private void prepareMediaController(){
         mMediaController = new MediaController(VideoPlayerActivity.this);
+        //The SimpleExoPlayer object contains a MediaPlayerControl which can be used with Android's
+        //MediaController class
         mMediaPlayerControl = mSimpleExoPlayer.getMediaPlayerControl();
-
-
-
-        //Here we retrieve the ExoPlayer's MediaPlayerControl object to control playback
+        //Associate the MediaController with the VideoView we're playing the media through
         mMediaController.setMediaPlayer(mMediaPlayerControl);
         mMediaController.setAnchorView(mVideoView);
         mVideoView.setMediaController(mMediaController);
