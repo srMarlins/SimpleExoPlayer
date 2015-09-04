@@ -12,7 +12,7 @@ import com.google.android.exoplayer.util.Util;
 import com.jfowler.onramp.simpleexoplayer.MediaModels.Media;
 import com.jfowler.onramp.simpleexoplayer.Renderers.RendererInterfaces.MediaListener;
 import com.jfowler.onramp.simpleexoplayer.SimpleExoPlayer;
-import com.jfowler.onramp.simpleexoplayer.utils.MediaFactory;
+import com.jfowler.onramp.simpleexoplayer.Utils.MediaFactory;
 import com.jfowler.onramp.simpleexoplayerdemo.R;
 
 import java.net.MalformedURLException;
